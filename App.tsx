@@ -1,10 +1,16 @@
-import { NativeBaseProvider  } from "native-base";
+import { Box, NativeBaseProvider  } from "native-base";
 import { Summary } from "./src/components/Summary";
+import { color } from "./src/styles/colors";
 
 export default function App() {
   return (
     <NativeBaseProvider>
-      <Summary />
+      <Box
+        flex={1}
+        bg={color.background}
+      >
+        <Summary />
+      </Box>
     </NativeBaseProvider>
   );
 }
