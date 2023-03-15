@@ -1,5 +1,6 @@
 import { Box, NativeBaseProvider  } from "native-base";
-import { Dashboard } from "./src/components/Elements/Dashboard";
+import { Dashboard } from "./src/components/elements/Dashboard";
+import { Transactions } from "./src/components/elements/Transactions";
 import { color } from "./src/styles/colors";
 
 export default function App() {
@@ -9,7 +10,14 @@ export default function App() {
         flex={1}
         bg={color.background}
       >
-        <Dashboard />
+        <Box
+          h="full"
+          flexDir="column"
+          justifyContent="space-between"
+        >
+          <Dashboard />
+          <Transactions />
+        </Box>
       </Box>
     </NativeBaseProvider>
   );
