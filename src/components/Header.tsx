@@ -2,6 +2,8 @@ import { Box, Button, Heading, Text } from "native-base";
 import { color } from "../styles/colors";
 import { Container } from "./Container";
 
+import Logo from "../assets/logo.svg"
+
 export function Header() {
   return (
     <Box
@@ -20,7 +22,7 @@ export function Header() {
           <Heading
             color="#FFF"
           >
-            dt money
+            <Logo width={173} height={40} />
           </Heading>
 
           <Button
