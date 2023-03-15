@@ -1,13 +1,31 @@
 import { Box, Text } from "native-base";
+
 import { color } from "../styles/colors";
+
+import Income from "../assets/income.svg"
+import Outcome from "../assets/outcome.svg"
+import Total from "../assets/total.svg"
 
 interface CardProps {
   type: "deposit" | "withdraw" | "total"
   amount: number
-  total?: boolean
 }
 
-export function Card({ type, amount, total }: CardProps) {
+export function Card({ type, amount }: CardProps) {
+  let icon = <></>
+
+  switch (type) {
+    case 'deposit':
+      icon = <Income width={32} height={32} />
+      break
+    case 'withdraw':
+      icon = <Outcome width={32} height={32} />
+      break
+    case 'total':
+      icon = <Total width={32} height={32} />
+      break
+  }
+
   return (
     <Box
       borderRadius="lg"
@@ -15,18 +33,26 @@ export function Card({ type, amount, total }: CardProps) {
       pb="10"
       pl="5"
       pr="32"
-      bg={total ? color.green : '#FFF'}
+      bg={type === "total" ? color.green : '#FFF'}
       mr="5"
+      position="relative"
     >
+      <Box
+        position="absolute"
+        top={5}
+        right={5}
+      >
+        {icon}
+      </Box>
+
+
       <Text
         fontSize="sm"
         fontWeight="medium"
-        color={total ? '#FFF' : color.textLight}
+        color={type === "total"  ? '#FFF' : color.textLight}
       > 
         {
-          (!total)
-            ? <Text>{(type === "deposit") ? "Entradas" : "Saídas"}</Text> 
-            : <Text>Total</Text> 
+            <Text>{(type === "deposit") ? "Entradas" : (type === "withdraw") ? "Saídas" : "Total"}</Text> 
         }
       </Text>
 
@@ -36,7 +62,7 @@ export function Card({ type, amount, total }: CardProps) {
         <Text
           fontSize="3xl"
           fontWeight="medium"
-          color={total ? '#FFF' : color.textLight}
+          color={type === "total" ? '#FFF' : color.textLight}
         >
           {
             new Intl.NumberFormat('pt-BR', {
@@ -48,7 +74,7 @@ export function Card({ type, amount, total }: CardProps) {
 
         <Text
           fontSize="xs"
-          color={total ? '#FFF' : color.textBody}
+          color={type === "total" ? '#FFF' : color.textBody}
         >
           Última entrada dia 13 de abril
         </Text>
