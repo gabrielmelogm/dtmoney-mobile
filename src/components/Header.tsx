@@ -4,7 +4,11 @@ import { Container } from "./Container";
 
 import Logo from "../assets/logo.svg"
 
-export function Header() {
+interface HeaderProps {
+  onOpen: () => void
+}
+
+export function Header({ onOpen }: HeaderProps) {
   return (
     <Box
       width="100%"
@@ -26,6 +30,7 @@ export function Header() {
           </Heading>
 
           <Button
+            onPress={onOpen}
             fontSize="md"
             px="5"
             bg={color.blueLight}

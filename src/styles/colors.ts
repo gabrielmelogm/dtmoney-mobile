@@ -6,6 +6,6 @@ export const color = {
   blue: "#5429cc",
   blueLight: "#6933ff",
   textLight: "#363f5f",
-  textBody: "#969cb3",
+  textBody: "#969cb2",
   shape: "#FFFFFF",
 };

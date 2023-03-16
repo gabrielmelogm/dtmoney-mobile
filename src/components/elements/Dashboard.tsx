@@ -2,10 +2,14 @@ import { Box, ScrollView } from "native-base";
 import { Card } from "../Card";
 import { Header } from "../Header";
 
-export function Dashboard() {
+interface DashboardProps {
+  onOpen: () => void
+}
+
+export function Dashboard({ onOpen }: DashboardProps) {
   return (
     <>
-      <Header />
+      <Header onOpen={onOpen} />
       <Box pl="5">
         <ScrollView
           marginTop="-24"
