@@ -1,29 +1,11 @@
 import { Box, ScrollView, Text } from "native-base";
+import { useTransactions } from "../../hooks/useTransactions";
 import { color } from "../../styles/colors";
 import { Container } from "../Container";
-import { Transaction, TransactionProps } from "../Transaction";
+import { Transaction } from "../Transaction";
 
 export function Transactions() {
-  const transactions: TransactionProps[] = [
-    {
-      title: "Desenvolvimento de site",
-      amount: 12000,
-      category: "Vendas",
-      createAt: new Date().toISOString(),
-    },
-    {
-      title: "Hamburgueria Pizzy",
-      amount: -59,
-      category: "Alimentação",
-      createAt: new Date().toISOString(),
-    },
-    {
-      title: "Aluguel do apartamento",
-      amount: -1200,
-      category: "Casa",
-      createAt: new Date().toISOString(),
-    },
-  ]
+  const { transactions } = useTransactions()
 
   return (
     <Box
@@ -61,7 +43,8 @@ export function Transactions() {
                 title={transaction.title}
                 amount={transaction.amount}
                 category={transaction.category}
-                createAt={transaction.createAt}
+                createdAt={transaction.createdAt}
+                type={transaction.type}
               />
             ))
           }

@@ -1,10 +1,16 @@
 import { Input as NativeInput } from "native-base"
+import { TextInputProps } from "react-native"
 import { color } from "../styles/colors"
 
-export function Input({...props}) {
+interface InputProps {
+  onChangeText?: () => void
+}
+
+export function Input({...props}: TextInputProps) {
   return <NativeInput
       {...props}
       py={3}
+      mb={2}
       variant="filled"
       fontSize="sm"
       color={color.textBody}

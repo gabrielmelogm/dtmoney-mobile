@@ -1,11 +1,16 @@
 import { Actionsheet, Box, Button, Text, KeyboardAvoidingView } from "native-base";
+import { useState } from "react";
 import { useWindowDimensions } from "react-native"
 
-import Close from "../../assets/close.svg"
+import { useTransactions } from "../../hooks/useTransactions";
 import { color } from "../../styles/colors";
 import { Container } from "../Container";
 import { Input } from "../Input";
 import { RadioButton } from "../RadioButton";
+
+import Close from "../../assets/close.svg"
+import Income from  "../../assets/income.svg"
+import Outcome from "../../assets/outcome.svg"
 
 interface FormProps {
   isOpen: boolean
@@ -13,7 +18,24 @@ interface FormProps {
 }
 
 export function Form({ isOpen, onClose }: FormProps) {
+  const [ title, setTitle ] = useState('')
+  const [ amount, setAmount ] = useState(0)
+  const [ type, setType ] = useState<"deposit" | "withdraw">("deposit")
+  const [ category, setCategory ] = useState("")
+
   const window = useWindowDimensions()
+  const { createTransaction } = useTransactions()
+
+  function handleSubmit() {
+    createTransaction({
+      amount,
+      category,
+      title,
+      type,
+      userEmail: "melogoncalvesbiel@gmail.com"
+    })
+    onClose()
+  }
 
   return (
     <Actionsheet isOpen={isOpen} onClose={onClose}>
@@ -54,8 +76,14 @@ export function Form({ isOpen, onClose }: FormProps) {
               width={window.width}
               paddingX={5}
             >
-                <Input mb={2} placeholder="Nome" />
-                <Input mb={2} placeholder="Preço" />
+                <Input
+                  onChangeText={(title) => setTitle(title)}
+                  placeholder="Nome"
+                />
+                <Input
+                  onChangeText={(amount) => setAmount(+amount)}
+                  placeholder="Preço"
+                />
 
                 <Box
                   mb={2}
@@ -65,13 +93,43 @@ export function Form({ isOpen, onClose }: FormProps) {
                   alignItems="center"
                   justifyContent="space-between"
                 >
-                  <RadioButton type="deposit" />
-                  <RadioButton type="withdraw" />
+                  <RadioButton
+                    onPress={() => setType('deposit')}
+                    icon={Income}
+                    isActive={type === "deposit"}
+                    activeColor={color.lightGreen}
+                  >
+                    <Text
+                      fontSize="md"
+                      pl={3}
+                      color={color.textLight}
+                    >
+                      Income
+                    </Text>
+                  </RadioButton>
+                  <RadioButton
+                    onPress={() => setType('withdraw')}
+                    icon={Outcome}
+                    isActive={type === "withdraw"}
+                    activeColor={color.lightRed}
+                  >
+                    <Text
+                        fontSize="md"
+                        pl={3}
+                        color={color.textLight}
+                      >
+                        Outcome
+                    </Text>
+                  </RadioButton>
                 </Box>
 
-                <Input mb={2} placeholder="Categoria" />
+                <Input
+                  onChangeText={(category) => setCategory(category)}
+                  placeholder="Categoria"
+                />
 
                 <Button
+                  onPress={handleSubmit}
                   mt={5}
                   py={4}
                   bg={color.green}

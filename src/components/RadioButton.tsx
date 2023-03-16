@@ -1,29 +1,32 @@
 import { Button, Icon, Text } from "native-base";
 import { useWindowDimensions } from "react-native"
-
-import Income from "../assets/income.svg"
-import Outcome from "../assets/outcome.svg"
+import { SvgProps } from "react-native-svg";
 
 import { color } from "../styles/colors";
 
 interface RadioButtonProps {
-  type: "deposit" | "withdraw"
+  isActive?: boolean
+  onPress: () => void
+  icon: React.FC<SvgProps>
+  activeColor: string
+  children: any
 }
 
-export function RadioButton({ type }: RadioButtonProps) {
+export function RadioButton({ isActive, onPress, icon, activeColor, children }: RadioButtonProps) {
   const window = useWindowDimensions()
 
   return (
    <Button
-      leftIcon={<Icon as={(type === "deposit") ? Income : Outcome} name="income" w={24} height={24} />}
+      onPress={onPress}
+      leftIcon={<Icon as={icon} name="income" w={24} height={24} />}
       width={(window.width/2) - 25}
       borderRadius="md"
       borderWidth={1.5}
       borderColor="#D7D7D7"
-      bg={color.shape}
+      bg={(isActive) && activeColor || color.shape}
 
       _pressed={{
-        bg: (type === "deposit") ? "#33cc952e" : "#e52e4d59",
+        bg: activeColor,
       }}
     >
       <Text
@@ -31,7 +34,7 @@ export function RadioButton({ type }: RadioButtonProps) {
         pl={3}
         color={color.textLight}
       >
-        {type === "deposit" ? "Income" : "Outcome"}
+        {children}
       </Text>
     </Button>
   )

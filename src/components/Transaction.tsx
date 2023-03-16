@@ -1,14 +1,8 @@
 import { Box, Text } from "native-base";
+import { TransactionProps } from "../hooks/useTransactions";
 import { color } from "../styles/colors";
 
-export interface TransactionProps {
-  title: string
-  amount: number
-  category: string
-  createAt: string
-}
-
-export function Transaction({ title, amount, category, createAt }: TransactionProps) {
+export function Transaction({ title, amount, category, type, createdAt }: TransactionProps) {
   return (
     <Box
       w="full"
@@ -25,13 +19,18 @@ export function Transaction({ title, amount, category, createAt }: TransactionPr
       </Text>
       <Text
         fontSize="2xl"
-        color={amount > 0 ? color.darkGreen : color.red}
+        color={type === "deposit" ? color.darkGreen : color.red}
       >
         {
-          new Intl.NumberFormat('pt-BR', {
+          (type === "deposit")
+          ? new Intl.NumberFormat('pt-BR', {
+              style: "currency",
+              currency: "BRL"
+            }).format(amount)
+          : `- ${new Intl.NumberFormat('pt-BR', {
             style: "currency",
             currency: "BRL"
-          }).format(amount)
+          }).format(amount)}`
         }
       </Text>
 
@@ -42,7 +41,7 @@ export function Transaction({ title, amount, category, createAt }: TransactionPr
         justifyContent="space-between"
       >
         <Text color={color.textBody}>{category}</Text>
-        <Text color={color.textBody}>{createAt}</Text>
+        <Text color={color.textBody}>{createdAt}</Text>
       </Box>
 
     </Box>
