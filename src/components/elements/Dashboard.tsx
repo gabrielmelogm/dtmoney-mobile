@@ -1,4 +1,5 @@
 import { Box, ScrollView } from "native-base";
+import { useTransactions } from "../../hooks/useTransactions";
 import { Card } from "../Card";
 import { Header } from "../Header";
 
@@ -7,6 +8,23 @@ interface DashboardProps {
 }
 
 export function Dashboard({ onOpen }: DashboardProps) {
+  const { transactions } = useTransactions()
+  const summary = transactions.reduce((acc, transaction) => {
+    if (transaction.type === "deposit") {
+      acc.deposits += transaction.amount
+      acc.total += transaction.amount
+    } else {
+      acc.withdraws += transaction.amount
+      acc.total -= transaction.amount
+    }
+
+    return acc
+  }, {
+    deposits: 0,
+    withdraws: 0,
+    total: 0
+  })
+
   return (
     <>
       <Header onOpen={onOpen} />
@@ -19,9 +37,9 @@ export function Dashboard({ onOpen }: DashboardProps) {
           <Box
             flexDir="row"
           >
-            <Card type="deposit" amount={17500} />
-            <Card type="withdraw" amount={3000} />
-            <Card type="total" amount={14500} />
+            <Card type="deposit" amount={summary.deposits} />
+            <Card type="withdraw" amount={summary.withdraws} />
+            <Card type="total" amount={summary.total} />
           </Box>
         </ScrollView>
       </Box>
