@@ -1,7 +1,7 @@
 <div align="center">
   <h1>💰 DTMONEY</h1>
   <b>Segundo projeto do ignite na trilha react</b>
-  <img src="/assets/mobile-screens.png" alt="Gif de exemplo" width="500px"/>
+  <img src="/assets/mobile-screens.png" alt="Gif de exemplo" width="100%"/>
 </div>
 <div align="center">
   <span align="center">Uma extensão de um projeto web de gerenciamento de finanças</span>
