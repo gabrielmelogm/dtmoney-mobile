@@ -33,17 +33,17 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
   }, [])
 
   async function getTransactions() {
-    let data: any = []
+    // let data: any = []
 
-    const transactionsList = await getDocs(collection(db, "transactions"))
-    transactionsList.forEach((response) => {
-      const itemId = response.id
-      const itemData = response.data()
-      itemData.id = itemId
-      if (itemData.userEmail === "melogoncalvesbiel@gmail.com") return data.push(itemData)
-    })
+    // const transactionsList = await getDocs(collection(db, "transactions"))
+    // transactionsList.forEach((response) => {
+    //   const itemId = response.id
+    //   const itemData = response.data()
+    //   itemData.id = itemId
+    //   if (itemData.userEmail === "melogoncalvesbiel@gmail.com") return data.push(itemData)
+    // })
 
-    setTransactions(data)
+    setTransactions([])
   }
 
   async function createTransaction(transactionInput: TransactionInput) {
