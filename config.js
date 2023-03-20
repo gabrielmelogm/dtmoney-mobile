@@ -6,6 +6,7 @@ import {
   AUTH_DOMAIN,
   API_KEY,
   MEASUREMENT_ID,
+  USER_EMAIL,
 } from "@env";
 
 export default {
@@ -16,4 +17,5 @@ export default {
   AUTH_DOMAIN,
   API_KEY,
   MEASUREMENT_ID,
+  USER_EMAIL,
 };

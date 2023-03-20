@@ -14,8 +14,8 @@ export default function App() {
     <NativeBaseProvider>
       <AuthenticationProvider>
         <TransactionsProvider>
-          <Login />
-          {/* <Box
+          {/* <Login /> */}
+          <Box
             flex={1}
             bg={color.background}
           >
@@ -28,7 +28,7 @@ export default function App() {
               <Transactions />
             </Box>
             <Form isOpen={isOpen} onClose={onClose} />
-          </Box> */}
+          </Box>
         </TransactionsProvider>
       </AuthenticationProvider>
     </NativeBaseProvider>

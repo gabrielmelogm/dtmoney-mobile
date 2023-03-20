@@ -1,5 +1,6 @@
-import { collection, getDocs } from "firebase/firestore"
+import { addDoc, collection, getDocs, query, where } from "firebase/firestore"
 import { createContext, ReactNode, useContext, useEffect, useState } from "react"
+import config from "../../config"
 import { db } from "../firebase"
 
 export type TransactionProps = {
@@ -33,31 +34,35 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
   }, [])
 
   async function getTransactions() {
-    // let data: any = []
+    let data: any = []
 
-    // const transactionsList = await getDocs(collection(db, "transactions"))
-    // transactionsList.forEach((response) => {
-    //   const itemId = response.id
-    //   const itemData = response.data()
-    //   itemData.id = itemId
-    //   if (itemData.userEmail === "melogoncalvesbiel@gmail.com") return data.push(itemData)
-    // })
+    const transactionsList = await getDocs(
+      query(collection(db, "transactions"),
+        where("userEmail", "==", config.USER_EMAIL)
+      )
+    )
+    transactionsList.forEach((response) => {
+      const itemId = response.id
+      const itemData = response.data()
+      itemData.id = itemId
+      return data.push(itemData)
+    })
 
-    setTransactions([])
+    setTransactions(data)
   }
 
   async function createTransaction(transactionInput: TransactionInput) {
-      const data: TransactionProps = {
-        id: 4,
-        amount: transactionInput.amount,
-        category: transactionInput.category,
-        title: transactionInput.title,
-        type: transactionInput.type,
-        userEmail: transactionInput.userEmail,
-        createdAt: new Date().toISOString()
-      }
+    const createAt = new Date().toISOString()
+    await addDoc(collection(db, "transactions"), {
+      title: transactionInput.title,
+      type: transactionInput.type,
+      category: transactionInput.category,
+      amount: transactionInput.amount,
+      createdAt: `${createAt}`,
+      userEmail: config.USER_EMAIL
+    })
 
-      setTransactions([...transactions, data])
+    await getTransactions()
   }
 
   return (
