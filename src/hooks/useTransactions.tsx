@@ -1,4 +1,6 @@
+import { collection, getDocs } from "firebase/firestore"
 import { createContext, ReactNode, useContext, useEffect, useState } from "react"
+import { db } from "../firebase"
 
 export type TransactionProps = {
   id?: number
@@ -30,36 +32,17 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
     getTransactions()
   }, [])
 
-  function getTransactions() {
-    const data: TransactionProps[] = [
-      {
-        id: 1,
-        amount: 12000,
-        category: "Vendas",
-        title: "Desenvolvimento de site",
-        type: "deposit",
-        createdAt: new Date().toISOString(),
-        userEmail: "melogoncalvesbiel@gmail.com"
-      },
-      {
-        id: 2,
-        amount: 59,
-        category: "Alimentação",
-        title: "Hamburgueria Pizzy",
-        type: "withdraw",
-        createdAt: new Date().toISOString(),
-        userEmail: "melogoncalvesbiel@gmail.com"
-      },
-      {
-        id: 3,
-        amount: 1200,
-        category: "Casa",
-        title: "Aluguel do apartamento",
-        type: "withdraw",
-        createdAt: new Date().toISOString(),
-        userEmail: "melogoncalvesbiel@gmail.com"
-      },
-    ]
+  async function getTransactions() {
+    let data: any = []
+
+    const transactionsList = await getDocs(collection(db, "transactions"))
+    transactionsList.forEach((response) => {
+      const itemId = response.id
+      const itemData = response.data()
+      itemData.id = itemId
+      if (itemData.userEmail === "melogoncalvesbiel@gmail.com") return data.push(itemData)
+    })
+
     setTransactions(data)
   }
 

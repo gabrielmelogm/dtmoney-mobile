@@ -1,5 +1,6 @@
 import { Box, Text } from "native-base";
 import { TransactionProps } from "../hooks/useTransactions";
+import { moment } from "../lib/moment";
 import { color } from "../styles/colors";
 
 export function Transaction({ title, amount, category, type, createdAt }: TransactionProps) {
@@ -41,7 +42,7 @@ export function Transaction({ title, amount, category, type, createdAt }: Transa
         justifyContent="space-between"
       >
         <Text color={color.textBody}>{category}</Text>
-        <Text color={color.textBody}>{createdAt}</Text>
+        <Text color={color.textBody}>{createdAt && moment(createdAt) }</Text>
       </Box>
 
     </Box>
